@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Клуб психического здоровья // Первый поток</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#0a0a0b;
+    --panel:#121214;
+    --line:#232326;
+    --txt:#e8e8ea;
+    --dim:#8a8a92;
+    --acc:#d4ff3f;
+    --acc2:#ff3f5f;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  /* ===== HEADER (как в club) ===== */
+  header{
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    padding:16px 0;
+    position:sticky;top:0;z-index:100;
+  }
+  header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .logo{font-size:15px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+  .logo em{color:var(--acc);font-style:normal;}
+  .nav-right{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .status{font-size:12px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+  .dot{width:8px;height:8px;background:var(--acc);border-radius:50%;animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.3);}}
+  .btn-top{
+    background:var(--acc);color:#000;text-decoration:none;
+    padding:10px 20px;font-size:12px;font-weight:800;
+    letter-spacing:1px;text-transform:uppercase;transition:.15s;
+  }
+  .btn-top:hover{background:#fff;}
+
+  /* ===== HERO ===== */
+  .hero{padding:80px 0 60px;border-bottom:1px solid var(--line);}
+  .hero .eyebrow{
+    font-size:12px;letter-spacing:2px;color:var(--dim);
+    text-transform:uppercase;margin-bottom:20px;
+  }
+  h1{
+    font-size:clamp(30px,5.5vw,60px);
+    font-weight:800;line-height:1.05;
+    letter-spacing:-2px;margin-bottom:24px;
+  }
+  h1 em{color:var(--acc);font-style:normal;}
+  .sub{
+    font-size:clamp(15px,2vw,19px);
+    color:var(--dim);max-width:680px;margin-bottom:32px;
+  }
+  .sub b{color:var(--txt);font-weight:600;}
+  .scarcity{
+    display:inline-block;
+    border:1px solid var(--acc2);
+    color:var(--acc2);
+    padding:10px 18px;
+    font-size:13px;font-weight:700;letter-spacing:1px;
+    margin-bottom:36px;
+  }
+  .scarcity b{color:var(--txt);}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;text-decoration:none;
+    padding:18px 32px;font-size:14px;font-weight:800;
+    letter-spacing:1px;text-transform:uppercase;
+    transition:.15s;border:none;cursor:pointer;
+    font-family:inherit;
+  }
+  .btn-primary{background:var(--acc);color:#000;}
+  .btn-primary:hover{background:#fff;transform:translateY(-2px);}
+  .btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--acc);color:var(--acc);}
+
+  /* ===== CASE (интерактив как в club) ===== */
+  section{padding:70px 0;border-bottom:1px solid var(--line);}
+  .label{
+    font-size:12px;letter-spacing:2px;color:var(--dim);
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  h2{
+    font-size:clamp(24px,4vw,38px);
+    font-weight:800;letter-spacing:-1px;margin-bottom:44px;
+  }
+  h2 em{color:var(--acc);font-style:normal;}
+
+  .case{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:32px;
+  }
+  .case-head{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;padding-bottom:18px;
+    border-bottom:1px solid var(--line);margin-bottom:24px;
+  }
+  .case-head span{font-size:12px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;}
+  .case-head b{color:var(--acc);font-size:12px;letter-spacing:2px;}
+  .bubble{display:flex;gap:14px;margin-bottom:24px;}
+  .avatar{width:44px;height:44px;flex-shrink:0;
+    background:var(--acc2);color:#000;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;
+  }
+  .bubble .txt{
+    background:#1a1a1d;padding:16px;
+    border-left:2px solid var(--acc2);font-size:15px;
+  }
+  .bubble .txt small{display:block;color:var(--dim);font-size:12px;margin-bottom:6px;}
+  .answers{display:grid;gap:10px;margin-top:18px;}
+  .answers button{
+    background:#17171a;border:1px solid var(--line);
+    color:var(--txt);padding:16px;text-align:left;
+    font-size:14px;cursor:pointer;transition:.15s;
+    font-family:inherit;
+  }
+  .answers button:hover{border-color:var(--acc);background:#1c1c20;}
+  .answers button.correct{border-color:var(--acc);background:rgba(212,255,63,.1);}
+  .answers button.wrong{border-color:var(--acc2);background:rgba(255,63,95,.1);}
+  .verdict{
+    margin-top:18px;padding:16px;font-size:14px;
+    border-left:2px solid var(--acc);display:none;background:#17171a;
+  }
+
+  /* ===== GRID CARDS ===== */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);}
+  .card{background:var(--bg);padding:32px 26px;transition:.2s;cursor:pointer;}
+  .card:hover{background:var(--panel);}
+  .card .num{font-size:12px;letter-spacing:2px;color:var(--acc);margin-bottom:18px;display:block;}
+  .card h3{font-size:19px;margin-bottom:14px;font-weight:700;}
+  .card p{font-size:14px;color:var(--dim);margin-bottom:20px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chips span{font-size:11px;padding:5px 10px;border:1px solid var(--line);color:var(--dim);letter-spacing:.5px;}
+  .more{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:.4s ease;font-size:14px;color:var(--dim);
+    border-left:2px solid var(--acc);padding-left:14px;
+  }
+  .card.open .more{max-height:400px;opacity:1;margin-top:14px;}
+  .more b{color:var(--txt);}
+  .hint{font-size:11px;color:var(--acc);letter-spacing:1px;margin-top:14px;text-transform:uppercase;}
+
+  /* ===== RESULT ===== */
+  .result{background:var(--panel);border:1px solid var(--line);padding:40px;border-left:3px solid var(--acc);}
+  .result p{font-size:16px;color:var(--dim);margin-bottom:14px;}
+  .result p:last-child{margin-bottom:0;}
+  .result b{color:var(--txt);}
+  .result .hi{color:var(--acc);font-weight:700;}
+
+  /* ===== SPOTS ===== */
+  .spots{background:var(--panel);border:1px solid var(--line);padding:36px;}
+  .spots-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
+  .spots-head h3{font-size:20px;font-weight:800;letter-spacing:-.5px;}
+  .spots-head .cnt{font-size:14px;color:var(--acc2);font-weight:700;letter-spacing:1px;}
+  .bar{height:10px;background:#1f1f23;position:relative;overflow:hidden;}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc2),var(--acc));transition:width 1.2s ease;}
+  .spots-note{margin-top:14px;font-size:13px;color:var(--dim);}
+  .spots-note b{color:var(--acc);}
+
+  /* ===== PRICE (как в club) ===== */
+  .price-box{
+    background:var(--panel);border:1px solid var(--line);
+    padding:44px;display:grid;grid-template-columns:1fr auto;
+    gap:32px;align-items:center;
+  }
+  .price-box .amount{
+    font-size:clamp(38px,6vw,60px);
+    font-weight:800;letter-spacing:-2px;
+  }
+  .price-box .amount em{color:var(--acc);font-style:normal;font-size:16px;font-weight:400;letter-spacing:0;}
+  .price-note{color:var(--dim);font-size:14px;margin-top:10px;}
+  .old{color:var(--dim);text-decoration:line-through;font-size:16px;margin-right:10px;}
+  .cta{
+    background:var(--acc);color:#000;border:none;
+    padding:20px 36px;font-size:15px;font-weight:800;
+    letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+    transition:.15s;font-family:inherit;white-space:nowrap;
+    text-decoration:none;display:inline-block;
+  }
+  .cta:hover{background:#fff;transform:translateY(-2px);}.cta-note{margin-top:14px;font-size:13px;color:var(--dim);grid-column:1/-1;}
+  .cta-note a{color:var(--acc);text-decoration:none;font-weight:600;}
+  .cta-note a:hover{text-decoration:underline;}
+
+  footer{padding:44px 0;text-align:center;color:var(--dim);font-size:12px;letter-spacing:1px;}
+
+  @media(max-width:640px){
+    .price-box{grid-template-columns:1fr;}
+    .cta{width:100%;text-align:center;}
+    h1{letter-spacing:-1px;}
+    .hero{padding:56px 0 44px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap">
+    <div class="logo">🧠 Клуб <em>Mind</em></div>
+    <div class="nav-right">
+      <div class="status"><span class="dot"></span> Набор 1-го потока</div>
+      <a class="btn-top" href="https://t.me/Ceo_mind0" target="_blank" rel="noopener">Занять место</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">Практика в Zoom • Мини-группа строго до 20 человек</div>
+    <h1>Это не банальные советы<br>в духе <em>«просто будь счастлив»</em></h1>
+    <p class="sub">
+      Разбор самых частых проблем, с которыми сталкивается почти каждый, —
+      и <b>конкретные решения к каждой</b>. Не теория, а навык.
+    </p>
+    <div class="scarcity">⚡ Осталось <b>4 места</b> по себестоимости (499 ₽ за весь поток)</div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#price">Забронировать за 499 ₽</a>
+      <a class="btn btn-ghost" href="#case">Пройти тест-кейс</a>
+    </div>
+  </div>
+
+  <!-- CASE / ИНТЕРАКТИВ -->
+  <section id="case">
+    <div class="label">CASE_01 // Проверь себя за 30 секунд</div>
+    <h2>Стресс-сценарий <em>из реальной жизни</em></h2>
+
+    <div class="case">
+      <div class="case-head">
+        <span>Внутренний диалог • 02:14 ночи</span>
+        <b>Тревожный сценарий</b>
+      </div>
+
+      <div class="bubble">
+        <div class="avatar">Я</div>
+        <div class="txt">
+          <small>Мысли по кругу • тревога накрывает</small>
+          «Я опять всё испортил. Я недостаточно хорош. Все это видят. Завтра будет только хуже».
+        </div>
+      </div>
+
+      <p style="font-size:14px;color:var(--dim);">Как реагируешь? (выбери вариант)</p>
+      <div class="answers" id="answers">
+        <button data-ok="0">Прокручиваю эти мысли ещё 3 часа и засыпаю под утро.</button>
+        <button data-ok="1">Замечаю мысль как мысль, а не факт. Дышу 4-7-8 и возвращаюсь в тело: 5-4-3-2-1.</button>
+        <button data-ok="0">Убеждаю себя, что всё нормально, и заедаю это печеньем.</button>
+        <button data-ok="0">Решаю, что я просто слабый и ничего не изменить.</button>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </section>
+
+  <!-- БЛОКИ 1-3 -->
+  <section>
+    <div class="label">01</div>
+    <h2>Тревожность <em>и неуверенность</em></h2>
+    <div class="grid">
+      <div class="card" onclick="this.classList.toggle('open')">
+        <span class="num">1️⃣ МОДУЛЬ</span>
+        <h3>Постоянное напряжение, мысли по кругу</h3>
+        <p>Вечное «я в себе не уверен» — знакомо? Ты учишься оставаться спокойным и уверенным даже в самых стрессовых ситуациях.</p>
+        <div class="chips"><span>Работа с тревогой</span><span>Уверенность в стрессе</span></div>
+        <div class="more"><b>Что внутри:</b> техники заземления, дыхание 4-7-8, дневник триггеров, разбор автоматических мыслей. Алгоритм действий в момент паники.</div>
+        <div class="hint">▸ нажми, чтобы раскрыть</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">02</div>
+    <h2>Личные <em>границы</em></h2>
+    <div class="grid">
+      <div class="card" onclick="this.classList.toggle('open')">
+        <span class="num">2️⃣ МОДУЛЬ</span>
+        <h3>Как выстраивать границы без чувства вины</h3>
+        <p>Как находить друзей, с которыми реально есть о чём поговорить. И как мягко, но твёрдо отодвинуть от себя ненужных людей.</p>
+        <div class="chips"><span>Границы без вины</span><span>Окружение</span></div><div class="more"><b>Что внутри:</b> скрипты «нет» без агрессии, разбор токсичных паттернов, практика отказа, работа с чувством вины.</div>
+        <div class="hint">▸ нажми, чтобы раскрыть</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="label">03</div>
+    <h2>Почему это <em>работает</em></h2>
+    <div class="grid">
+      <div class="card" onclick="this.classList.toggle('open')">
+        <span class="num">3️⃣ МОДУЛЬ</span>
+        <h3>Ты не просто читаешь</h3>
+        <p>Делаешь задания, получаешь обратную связь от экспертов и меняешь привычки шаг за шагом. Прогресс виден через 2–3 недели, а не через год.</p>
+        <div class="chips"><span>Практика</span><span>Обратная связь</span><span>Прогресс за 2–3 недели</span></div>
+        <div class="more"><b>Что внутри:</b> ежедневные короткие задания, чек-листы, разбор от куратора, поддержка в чате.</div>
+        <div class="hint">▸ нажми, чтобы раскрыть</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ИТОГ -->
+  <section>
+    <div class="label">04</div>
+    <h2>Итог</h2>
+    <div class="result">
+      <p>Наши курсы — это <b>не волшебная таблетка</b>.</p>
+      <p>Это <span class="hi">компас, который показывает направление</span>.</p>
+      <p>А дойти — ты сможешь сам. И это самое ценное.</p>
+    </div>
+  </section>
+
+  <!-- МЕСТА -->
+  <section>
+    <div class="label">Первый тестовый запуск</div>
+    <h2>Осталось <em>мало мест</em></h2>
+    <div class="spots">
+      <div class="spots-head">
+        <h3>Запись на тестовый поток</h3>
+        <div class="cnt" id="spotsCount">осталось 4 из 20</div>
+      </div>
+      <div class="bar"><i id="spotsBar" style="width:80%"></i></div>
+      <div class="spots-note">Группа набирается вручную, чтобы каждый получил <b>персональную обратную связь</b>. Как только места закончатся — набор закроется.</div>
+    </div>
+  </section>
+
+  <!-- ЦЕНА -->
+  <section id="price">
+    <div class="label">ПЕРВЫЙ СОСТАВ • 20 МЕСТ</div>
+    <h2>Забронировать участие <em>в клубе</em></h2>
+    <div class="price-box">
+      <div>
+        <div class="amount"><span class="old">2 500 ₽</span>499 ₽ <em>/ тестовый поток</em></div>
+        <div class="price-note">Цена по себестоимости — чтобы набрать первый поток и собрать сильные кейсы. Дальше будет дороже.</div>
+      </div>
+      <a class="cta" href="https://t.me/Ceo_mind0" target="_blank" rel="noopener">Занять место</a>
+      <div class="cta-note">Написать лично: <a href="https://t.me/Ceo_mind0" target="_blank" rel="noopener">@Ceo_mind0</a> • Отвечу в течение 15 минут. Никаких ботов.</div>
+    </div>
+  </section>
+
+  <footer>
+    Клуб психического здоровья • Прогресс начинается с первого шага
+  </footer>
+
+</div>
+
+<script>
+  /* ===== ТЕСТ-КЕЙС ===== */
+  const answers = document.getElementById('answers');
+  const verdict = document.getElementById('verdict');
+  answers.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if(!btn || answers.dataset.done) return;
+    answers.dataset.done = '1';
+    const ok = btn.dataset.ok === '1';
+    btn.classList.add(ok ? 'correct' : 'wrong');
+    if(!ok) answers.querySelector('[data-ok="1"]').classList.add('correct');
+    verdict.style.display = 'block';
+    verdict.innerHTML = ok
+      ? '<b style="color:var(--acc)">Верно.</b> Ты не воюешь с мыслями, а наблюдаешь их. Это и есть навык, который тренируется в клубе.'
+      : '<b style="color:var(--acc2)">Слив.</b> Мысли победили тебя за секунду. Именно этот рефлекс и тренируется на курсе.';
+  });
+
+  /* ===== ТАЙМЕР ===== */
+  const deadline = new Date().getTime() + 48*60*60*1000;
+  /* ===== МЕСТА ===== */
+  let spots = 4;
+  const total = 20;
+  const spotsCount = document.getElementById('spotsCount');
+  const spotsBar = document.getElementById('spotsBar');
+  function renderSpots(){
+    const taken = total - spots;
+    spotsCount.textContent = 'осталось ' + spots + ' из ' + total;
+    spotsBar.style.width = ((taken/total)*100) + '%';
+  }
+  renderSpots();
+  setInterval(() => {if(spots > 1){ spots--; renderSpots(); }
+  }, 45000);
+</script>
+
+</body>
+</html>
